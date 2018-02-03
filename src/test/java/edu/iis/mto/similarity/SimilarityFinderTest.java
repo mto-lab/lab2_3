@@ -205,4 +205,45 @@ public class SimilarityFinderTest {
         assertThat(EXPECTED, Matchers.equalTo(actualOutput));
     }
 
+    @Test
+    public void calculateJackardSimilarityCallSizeMethodZeroTimes() {
+        int[] fisrtSequence = {};
+        int[] secondSequence = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+        int expectedOutput = 0;
+        SimilarityFinder objectUnderTest = new SimilarityFinder(new SequenceSearcherDubler());
+        objectUnderTest.calculateJackardSimilarity(fisrtSequence, secondSequence); // in that case result is irrelevant
+
+        assertThat(expectedOutput, Matchers.equalTo(SequenceSearcherDubler.methodCallCounter));
+    }
+
+    @Test
+    public void calculateJackardSimilarityCallSizeMethodOneTime() {
+        int[] fisrtSequence = {1};
+        int[] secondSequence = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+        SequenceSearcherDubler.searchResults.push(false);
+        int expectedOutput = 1;
+        SimilarityFinder objectUnderTest = new SimilarityFinder(new SequenceSearcherDubler());
+        objectUnderTest.calculateJackardSimilarity(fisrtSequence, secondSequence); // in that case result is irrelevant
+
+        assertThat(expectedOutput, Matchers.equalTo(SequenceSearcherDubler.methodCallCounter));
+    }
+
+    @Test
+    public void calculateJackardSimilarityCallSizeMethodManyTimes() {
+        int[] fisrtSequence = {1, 2, 3, 4, 5, 6, 7};
+        int[] secondSequence = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+        SequenceSearcherDubler.searchResults.push(true);
+        SequenceSearcherDubler.searchResults.push(true);
+        SequenceSearcherDubler.searchResults.push(true);
+        SequenceSearcherDubler.searchResults.push(true);
+        SequenceSearcherDubler.searchResults.push(false);
+        SequenceSearcherDubler.searchResults.push(false);
+        SequenceSearcherDubler.searchResults.push(false);
+        int expectedOutput = 7;
+        SimilarityFinder objectUnderTest = new SimilarityFinder(new SequenceSearcherDubler());
+        objectUnderTest.calculateJackardSimilarity(fisrtSequence, secondSequence); // in that case result is irrelevant
+
+        assertThat(expectedOutput, Matchers.equalTo(SequenceSearcherDubler.methodCallCounter));
+    }
+
 }
