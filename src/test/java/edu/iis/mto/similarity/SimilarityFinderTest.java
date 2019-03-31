@@ -33,5 +33,21 @@ public class SimilarityFinderTest {
         assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2), Matchers.is(expectedResult));
     }
 
+    @Test
+    public void searchMethodShouldBeCalledFiveTimes() {
+
+        int[] seq1 = {1,2,3,6,8};
+        int[] seq2 = {1,2,4,5,6,7,9,10};
+
+        SearcherDubler searcher = new SearcherDubler();
+        SimilarityFinder similarityFinder = new SimilarityFinder(searcher);
+
+        int expectedNumberOfCallsOfSearchMethod = 5;
+
+        similarityFinder.calculateJackardSimilarity(seq1, seq2);
+
+        assertThat(searcher.numberOfCallsOfSearchMethod, Matchers.is(expectedNumberOfCallsOfSearchMethod));
+}
+
 
 }
