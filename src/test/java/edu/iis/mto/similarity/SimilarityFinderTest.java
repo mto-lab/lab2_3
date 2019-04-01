@@ -72,6 +72,21 @@ public class SimilarityFinderTest {
         assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2), Matchers.is(expectedResult));
     }
 
+    @Test public void calculateJackardSimilarityShouldReturnZeroAsResultIfSecondSequenceIsEmpty() {
+
+        int[] seq1 = {1,2,3,4,5};
+        int[] seq2 = {};
+
+        SearcherDubler searcher = new SearcherDubler();
+        SimilarityFinder similarityFinder = new SimilarityFinder(searcher);
+
+        double expectedResult = 0;
+
+        assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2), Matchers.is(expectedResult));
+    }
+
+
+
 
 
 
